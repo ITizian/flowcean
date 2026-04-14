@@ -134,7 +134,8 @@ class RandomForestRegressorLearner(SupervisedLearner):
             # Create the model
             model = SciKitModel(
                 self.regressor,
-                output_names=outputs.collect_schema().names(),
+                input_features=collected_inputs.columns,
+                output_features=collected_outputs.columns,
             )
 
             # Notify callbacks that learning is complete

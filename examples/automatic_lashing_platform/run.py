@@ -49,7 +49,7 @@ def main() -> None:
         ["^p_accumulator_derivative_[0-9]*$", "T", "active_valve_count"],
     ]
     depth = [1, 2, 3, 4, 5, 7, 9, 11, 15, 20, 25, 30, 40]
-    
+
     for features in feature_combinations:
         results = {
             # "features": [],
@@ -95,7 +95,7 @@ def main() -> None:
             results["MAE"].append(entry["MeanAbsoluteError->container_weight"])
             results["MSE"].append(entry["MeanSquaredError->container_weight"])
             results["MAPE"].append(entry["MeanAbsolutePercentageError->container_weight"])
-    
+
         pl.DataFrame(results).write_csv(
             f"./results/results_regression_tree_{'_'.join(features)}.csv",
         )

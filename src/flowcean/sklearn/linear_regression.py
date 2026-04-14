@@ -22,4 +22,8 @@ class LinearRegression(SupervisedLearner):
             outputs,
         )
 
-        return SciKitModel(model, output_names=outputs.columns)
+        return SciKitModel(
+            model,
+            input_features=inputs.columns,
+            output_features=outputs.columns,
+        )

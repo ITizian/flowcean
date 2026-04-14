@@ -74,12 +74,12 @@ def build_regression_tree_results_csv(
 
 
 def plot_alp_pressures(
-        weight: float, 
-        cylinders: list[int] | None = None, 
+        weight: float,
+        cylinders: list[int] | None = None,
         time_limit: float = 4.0
     ) -> None:
     """Plot the pressure curves for a given container weight.
-    
+
     Args:
         weight: The container weight to filter the data by.
         cylinders: A list of cylinder numbers to include in the plot (1-4).
