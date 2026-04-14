@@ -29,7 +29,7 @@ class Model(Named, Protocol):
     """
 
     input_features: Sequence[str]
-    out_features: Sequence[str]
+    output_features: Sequence[str]
     pre_transform: Transform = Identity()
     post_transform: Transform = Identity()
 

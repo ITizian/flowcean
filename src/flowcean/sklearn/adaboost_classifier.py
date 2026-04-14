@@ -73,5 +73,6 @@ class AdaBoost(SupervisedLearner):
         self.classifier.fit(x, y)
         return SciKitModel(
             self.classifier,
-            output_names=[collected_outputs.columns[0]],
+            input_features=collected_inputs.columns,
+            output_features=[collected_outputs.columns[0]],
         )
