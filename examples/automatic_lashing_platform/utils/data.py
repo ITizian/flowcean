@@ -1,6 +1,6 @@
-from pathlib import Path
 import logging
-from .preload_alp_data import preload_alp_data
+from pathlib import Path
+
 import flowcean.utils.random
 from flowcean.polars import (
     DataFrame,
@@ -13,13 +13,15 @@ from flowcean.polars import (
     TrainTestSplit,
 )
 
+from .preload_alp_data import preload_alp_data
+
 logger = logging.getLogger(__name__)
 
 EXPERIMENT_DATA_PATH: str = "./data/alp_sim_data.parquet"
 
 
 def split_dataset(
-        path: str = EXPERIMENT_DATA_PATH,
+    path: str = EXPERIMENT_DATA_PATH,
 ) -> None:
     flowcean.utils.random.initialize_random(42)
 
@@ -27,7 +29,6 @@ def split_dataset(
     if not data_path.exists():
         logger.info("Processed data not found, preloading...")
         preload_alp_data()
-
 
     data = (
         DataFrame.from_parquet(data_path)

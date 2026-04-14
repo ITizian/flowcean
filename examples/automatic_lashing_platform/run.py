@@ -1,11 +1,10 @@
 import logging
-from pathlib import Path
 import time
+from pathlib import Path
 
 import polars as pl
-from  utils.data import split_dataset
+from utils.data import split_dataset
 from utils.plot import plot_alp_pressures, plot_performances
-
 
 import flowcean
 import flowcean.cli
@@ -32,7 +31,9 @@ def main() -> None:
     logger.info("Loading data...")
 
     time_start = time.time()
-    if not Path("./data/alp_sim_data.train.parquet").exists() or not Path("./data/alp_sim_data.test.parquet").exists():
+    train_path = Path("./data/alp_sim_data.train.parquet")
+    test_path = Path("./data/alp_sim_data.test.parquet")
+    if not train_path.exists() or not test_path.exists():
         logger.info("Processed data not found, splitting dataset...")
         split_dataset()
 
@@ -94,7 +95,9 @@ def main() -> None:
             results["depth"].append(d)
             results["MAE"].append(entry["MeanAbsoluteError->container_weight"])
             results["MSE"].append(entry["MeanSquaredError->container_weight"])
-            results["MAPE"].append(entry["MeanAbsolutePercentageError->container_weight"])
+            results["MAPE"].append(
+                entry["MeanAbsolutePercentageError->container_weight"],
+            )
 
         pl.DataFrame(results).write_csv(
             f"./results/results_regression_tree_{'_'.join(features)}.csv",
@@ -124,7 +127,6 @@ def main() -> None:
     )
     logger.info("XGBoost Evaluation report:\n%s", report)
     model.save("./models/xgboost_regressor.fml")
-
 
     plot_alp_pressures(weight=45000)
     plot_performances()
