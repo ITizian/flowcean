@@ -217,9 +217,6 @@ class ChainedTransforms(Invertible, Transform):
         """
         self.transforms = transforms
 
-    def __repr__(self) -> str:
-        return " | ".join(repr(t) for t in self.transforms)
-
     @override
     def apply(self, data: Data) -> Data:
         for transform in self.transforms:
