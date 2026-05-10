@@ -15,8 +15,6 @@ from .named import Named
 from .transform import Identity, Transform
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
-
     from .data import Data
 
 
@@ -27,8 +25,6 @@ class Model(Named, Protocol):
     A model is used to predict outputs for given inputs.
     """
 
-    input_features: Sequence[str]
-    output_features: Sequence[str]
     pre_transform: Transform = Identity()
     post_transform: Transform = Identity()
 

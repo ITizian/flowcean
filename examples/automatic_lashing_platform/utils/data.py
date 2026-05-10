@@ -23,7 +23,6 @@ EXPERIMENT_DATA_PATH: str = "./data/alp_sim_data.parquet"
 def split_dataset(
     path: str = EXPERIMENT_DATA_PATH,
 ) -> None:
-    flowcean.utils.random.initialize_random(42)
 
     data_path = Path(path)
     if not data_path.exists():
