@@ -37,8 +37,8 @@ def main() -> None:
         logger.info("Processed data not found, splitting dataset...")
         split_dataset()
 
-    train_env = DataFrame.from_parquet("./data/alp_sim_data.train.parquet")
-    test_env = DataFrame.from_parquet("./data/alp_sim_data.test.parquet")
+    train_env = DataFrame.from_parquet(train_path)
+    test_env = DataFrame.from_parquet(test_path)
     time_end = time.time()
     logger.info("Took %.5f s to load data", time_end - time_start)
 
@@ -107,6 +107,7 @@ def main() -> None:
         n_estimators=40,
         max_depth=30,
         learning_rate=0.1,
+        random_state=flowcean.utils.random.get_seed(),
     )
     model = learn_offline(
         train_env,

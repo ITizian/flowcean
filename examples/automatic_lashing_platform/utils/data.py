@@ -21,7 +21,7 @@ EXPERIMENT_DATA_PATH: str = "./data/alp_sim_data.parquet"
 
 
 def split_dataset(
-    path: str = EXPERIMENT_DATA_PATH,
+    path: Path | str = EXPERIMENT_DATA_PATH,
 ) -> None:
 
     data_path = Path(path)
