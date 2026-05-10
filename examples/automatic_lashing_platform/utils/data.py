@@ -1,7 +1,6 @@
 import logging
 from pathlib import Path
 
-import flowcean.utils.random
 from flowcean.polars import (
     DataFrame,
     DiscreteDerivative,
@@ -22,8 +21,8 @@ EXPERIMENT_DATA_PATH: str = "./data/alp_sim_data.parquet"
 
 def split_dataset(
     path: Path | str = EXPERIMENT_DATA_PATH,
+    seed: int = 42,
 ) -> None:
-
     data_path = Path(path)
     if not data_path.exists():
         logger.info("Processed data not found, preloading...")
@@ -51,7 +50,10 @@ def split_dataset(
     data.observe().sink_parquet(
         data_path.with_name(f"{data_path.stem}.processed.parquet"),
     )
-    train_env, test_env = TrainTestSplit(ratio=0.8, shuffle=True).split(data)
+    train_env, test_env = TrainTestSplit(ratio=0.8, shuffle=True).split(
+        data,
+        seed=seed,
+    )
     train_env.observe().sink_parquet(
         data_path.with_name(f"{data_path.stem}.train.parquet"),
     )

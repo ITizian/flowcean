@@ -28,6 +28,9 @@ def main() -> None:
     _config = flowcean.cli.initialize()
     flowcean.utils.random.initialize_random(42)
 
+    # Keep the dataset split on a fixed seed without advancing learner seeds.
+    split_seed = flowcean.utils.random.get_seed()
+
     logger.info("Loading data...")
 
     time_start = time.time()
@@ -35,7 +38,7 @@ def main() -> None:
     test_path = Path("./data/alp_sim_data.test.parquet")
     if not train_path.exists() or not test_path.exists():
         logger.info("Processed data not found, splitting dataset...")
-        split_dataset()
+        split_dataset(seed=split_seed)
 
     train_env = DataFrame.from_parquet(train_path)
     test_env = DataFrame.from_parquet(test_path)
@@ -53,7 +56,6 @@ def main() -> None:
 
     for features in feature_combinations:
         results = {
-            # "features": [],
             "depth": [],
             "MAE": [],
             "MSE": [],
@@ -67,6 +69,7 @@ def main() -> None:
             )
             learner = RegressionTree(
                 max_depth=d,
+                random_state=flowcean.utils.random.get_seed(),
             )
             model = learn_offline(
                 train_env,
@@ -89,7 +92,6 @@ def main() -> None:
             model.save(
                 f"./models/regression_tree_features_{'_'.join(features)}_depth_{d}.fml",
             )
-            # results["features"].append(", ".join(features))
             entry = report["DecisionTreeRegressor"].flatten(delimiter="->")
 
             results["depth"].append(d)
