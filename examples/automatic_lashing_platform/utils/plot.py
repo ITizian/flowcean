@@ -124,7 +124,7 @@ def plot_alp_pressures(
     p_init = data.select(pl.col("p_accumulator").list.first()).collect()
     print(f"p_init: {p_init}")
 
-    fig, ax = plt.subplots(layout="constrained")
+    _, ax = plt.subplots(layout="constrained")
     ax.plot(
         p_accumulator["time"],
         p_accumulator["value"],
@@ -167,7 +167,7 @@ styles = ["-", "-", "-", "--", "-."]
 
 def plot_performances() -> None:
     results = build_regression_tree_results_csv()
-    fig, ax = plt.subplots(layout="constrained")
+    _, ax = plt.subplots(layout="constrained")
     for i, features in enumerate(
         results["features"].unique(maintain_order=True),
     ):
